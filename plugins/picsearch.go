@@ -31,6 +31,9 @@ type PicSearch struct {
 }
 
 func init() {
+	if !base.Config.Plugins.PicSearch.Enable {
+		return
+	}
 	pSearch := PicSearch{
 		Plugin: essentials.Plugin{
 			Name:    "搜图",

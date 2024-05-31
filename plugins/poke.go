@@ -12,6 +12,9 @@ type Poke struct {
 }
 
 func init() {
+	if !base.Config.Plugins.Poke.Enable {
+		return
+	}
 	poke := Poke{
 		essentials.Plugin{
 			Name:    "戳一戳",

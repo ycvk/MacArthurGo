@@ -15,6 +15,9 @@ type Roll struct {
 }
 
 func init() {
+	if !base.Config.Plugins.Roll.Enable {
+		return
+	}
 	roll := Roll{
 		essentials.Plugin{
 			Name:    "随机",

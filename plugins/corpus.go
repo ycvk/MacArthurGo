@@ -26,6 +26,9 @@ type Rules struct {
 }
 
 func init() {
+	if !base.Config.Plugins.Corpus.Enable {
+		return
+	}
 	var rules []Rules
 	for _, v := range base.Config.Plugins.Corpus.Rules {
 		rule := Rules{

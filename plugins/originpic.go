@@ -22,6 +22,9 @@ type OriginPic struct {
 }
 
 func init() {
+	if !base.Config.Plugins.OriginPic.Enable {
+		return
+	}
 	originPic := OriginPic{
 		essentials.Plugin{
 			Name:    "原图",

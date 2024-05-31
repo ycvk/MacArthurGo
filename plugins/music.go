@@ -17,6 +17,9 @@ type Music struct {
 }
 
 func init() {
+	if !base.Config.Plugins.Music.Enable {
+		return
+	}
 	music := Music{
 		essentials.Plugin{
 			Name:    "音乐链接解析",

@@ -69,6 +69,9 @@ type ChatAI struct {
 }
 
 func init() {
+	if !base.Config.Plugins.ChatAI.Enable {
+		return
+	}
 	chatGPT := ChatGPT{
 		Enabled: base.Config.Plugins.ChatAI.ChatGPT.Enable,
 		Args:    base.Config.Plugins.ChatAI.ChatGPT.Args,

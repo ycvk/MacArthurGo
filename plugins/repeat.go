@@ -20,6 +20,9 @@ type Repeat struct {
 }
 
 func init() {
+	if !base.Config.Plugins.Repeat.Enable {
+		return
+	}
 	repeat := Repeat{
 		Plugin: essentials.Plugin{
 			Name:    "随机复读",

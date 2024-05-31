@@ -60,6 +60,9 @@ type LiveData struct {
 }
 
 func init() {
+	if !base.Config.Plugins.Bili.Enable {
+		return
+	}
 	aiSummarize := AISummarize{
 		Enabled:      base.Config.Plugins.Bili.AiSummarize.Enable,
 		Args:         base.Config.Plugins.Bili.AiSummarize.Args,

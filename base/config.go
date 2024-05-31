@@ -25,6 +25,7 @@ type config struct {
 	UpdateUrl      string  `json:"updateUrl"`
 	UpdateInterval int64   `json:"updateInterval"`
 	BannedList     []int64 `json:"bannedList"`
+	GroupWhiteList []int64 `json:"groupWhiteList"`
 	Plugins        struct {
 		Corpus struct {
 			Enable bool `json:"enable"`

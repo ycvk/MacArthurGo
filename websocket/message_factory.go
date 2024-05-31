@@ -31,7 +31,12 @@ func MessageFactory(msg *[]byte) *[]byte {
 	}
 
 	if messageStruct.Message != nil {
-		if essentials.BanList.IsBanned(messageStruct.UserId) {
+		// 判断是否在白名单中
+		if !essentials.BanPlugin.IsAllowedGroup(messageStruct.GroupId) {
+			return nil
+		}
+
+		if essentials.BanPlugin.IsBanned(messageStruct.UserId) {
 			return nil
 		}
 

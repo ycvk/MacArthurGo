@@ -11,17 +11,31 @@ type Ban struct {
 	Plugin
 }
 
-var BanList Ban
+var (
+	BanPlugin      Ban
+	BanList        map[int64]struct{}
+	GroupWhiteList map[int64]struct{}
+)
 
 func init() {
-	BanList = Ban{
+	BanPlugin = Ban{
 		Plugin: Plugin{
 			Name:    "禁止响应指定用户",
 			Enabled: true,
 		},
 	}
 
-	PluginArray = append(PluginArray, &Plugin{Interface: &BanList})
+	PluginArray = append(PluginArray, &Plugin{Interface: &BanPlugin})
+
+	BanList = make(map[int64]struct{})
+	for i := range base.Config.BannedList {
+		BanList[base.Config.BannedList[i]] = struct{}{}
+	}
+
+	GroupWhiteList = make(map[int64]struct{})
+	for i := range base.Config.GroupWhiteList {
+		GroupWhiteList[base.Config.GroupWhiteList[i]] = struct{}{}
+	}
 }
 
 func (b *Ban) ReceiveAll() *[]byte {
@@ -90,18 +104,14 @@ func (b *Ban) ReceiveEcho(*structs.EchoMessageStruct) *[]byte {
 }
 
 func (b *Ban) IsBanned(qq int64) bool {
-	if qq == base.Config.Admin {
+	if qq == base.Config.Admin || len(BanList) == 0 {
 		return false
 	}
+	_, ok := BanList[qq]
+	return ok
+}
 
-	base.Config.Mutex.RLock()
-	defer base.Config.Mutex.RUnlock()
-
-	for _, v := range base.Config.BannedList {
-		if v == qq {
-			return true
-		}
-	}
-
-	return false
+func (b *Ban) IsAllowedGroup(groupNum int64) bool {
+	_, ok := GroupWhiteList[groupNum]
+	return ok
 }

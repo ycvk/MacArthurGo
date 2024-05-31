@@ -81,10 +81,11 @@ type config struct {
 		ChatAI struct {
 			Enable  bool `json:"enable"`
 			ChatGPT struct {
-				Enable bool     `json:"enable"`
-				Args   []string `json:"args"`
-				Model  string   `json:"model"`
-				APIKey string   `json:"apiKey"`
+				Enable  bool     `json:"enable"`
+				Args    []string `json:"args"`
+				Model   string   `json:"model"`
+				APIKey  string   `json:"apiKey"`
+				BaseUrl string   `json:"baseUrl"`
 			} `json:"chatGPT"`
 			QWen struct {
 				Enable bool     `json:"enable"`

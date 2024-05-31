@@ -34,6 +34,7 @@ type ChatGPT struct {
 	Args    []string
 	model   string
 	apiKey  string
+	baseUrl string
 }
 
 type QWen struct {
@@ -77,6 +78,7 @@ func init() {
 		Args:    base.Config.Plugins.ChatAI.ChatGPT.Args,
 		model:   base.Config.Plugins.ChatAI.ChatGPT.Model,
 		apiKey:  base.Config.Plugins.ChatAI.ChatGPT.APIKey,
+		baseUrl: base.Config.Plugins.ChatAI.ChatGPT.BaseUrl,
 	}
 	qWen := QWen{
 		Enabled: base.Config.Plugins.ChatAI.QWen.Enable,
@@ -298,7 +300,9 @@ func (c *ChatAI) ReceiveEcho(echoMessageStruct *structs.EchoMessageStruct) *[]by
 }
 
 func (c *ChatGPT) RequireAnswer(str string) *string {
-	client := openai.NewClient(c.apiKey)
+	config := openai.DefaultConfig(c.apiKey)
+	config.BaseURL = c.baseUrl
+	client := openai.NewClientWithConfig(config)
 	resp, err := client.CreateChatCompletion(
 		context.Background(),
 		openai.ChatCompletionRequest{

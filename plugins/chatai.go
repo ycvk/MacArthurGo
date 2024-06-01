@@ -322,6 +322,12 @@ func (c *ChatGPT) RequireAnswer(str string) *string {
 		return &res
 	}
 
+	if len(resp.Choices) == 0 {
+		log.Println("ChatCompletion response has no choices")
+		res := "无响应"
+		return &res
+	}
+
 	res := c.model + ": " + resp.Choices[0].Message.Content
 	return &res
 }
